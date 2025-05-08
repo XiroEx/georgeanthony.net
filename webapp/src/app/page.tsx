@@ -18,10 +18,9 @@ export default function FinancialServicesSite() {
         </section>
 
         <section id="services" className="mb-16">
-          <h3 className="text-2xl font-semibold mb-6">Our Services</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <Card>
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
                 <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Businesses and Professionals</h5>
                 <h2 className="text-sm mb-4 text-[#7200a2] uppercase" > fintech consulting and advisory servcies</h2>
@@ -35,7 +34,7 @@ export default function FinancialServicesSite() {
 
             {/* Services for Individuals and Families */}
             <div>
-              <Card>
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
                   <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Families and Individuals</h5>
                   <h2 className="text-sm mb-4 text-[#7200a2] uppercase" >financial planning & insurance coverage</h2>
