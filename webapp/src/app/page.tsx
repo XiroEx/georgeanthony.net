@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function FinancialServicesSite() {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+    <div className=" bg-gray-50 text-gray-900 font-sans">
 
       <main className="px-6 py-12 max-w-5xl mx-auto">
         <section className="mb-16 text-center">
@@ -99,12 +99,8 @@ export default function FinancialServicesSite() {
             <Button type="submit" className="bg-[#7200a2] hover:bg-purple-800 text-white">Send Message</Button>
           </form>
         </section>
-        
       </main>
 
-      <footer className="bg-white border-t p-6 text-center text-sm text-gray-500">
-        <p>&copy; 2025 George Anthony. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
