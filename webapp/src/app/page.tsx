@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import Link from "next/link";
 //import { Mail, Phone, DollarSign } from "lucide-react";
 
 export default function FinancialServicesSite() {
@@ -15,7 +16,7 @@ export default function FinancialServicesSite() {
           <p className="text-lg text-gray-600 mb-6">
             Comprehensive services to protect your family, grow your wealth, and support your business goals.
           </p>
-          <Button className="px-6 py-3 text-lg bg-[#7200a2] hover:bg-purple-800 text-white">Get Started</Button>
+          <Button className="px-6 py-3 text-lg bg-[#7200a2] hover:bg-purple-800 text-white"><Link href='#contact'>Get Started</Link></Button>
         </section>
 
         <section id="services" className="mb-16">

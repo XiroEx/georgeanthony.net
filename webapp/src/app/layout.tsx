@@ -31,7 +31,7 @@ export default function RootLayout({
         <header className="bg-white shadow p-6 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-[#7200a2]"><Link href="/">George Anthony</Link></h1>
           <nav className="space-x-6">
-            <a href="quote" className="hover:text-[#7200a2]">Services</a>
+            <a href="quote" className="hover:text-[#7200a2]">Get a Quote</a>
             <a href="#about" className="hover:text-[#7200a2]">About</a>
             <a href="#contact" className="hover:text-[#7200a2]">Contact</a>
           </nav>

@@ -124,3 +124,7 @@
     @apply cursor-pointer;
   }
 }
+
+html {
+  @apply scroll-smooth;
+}

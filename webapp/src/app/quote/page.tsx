@@ -74,7 +74,7 @@ export default function Quote() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans flex py-12 justify-center">
+    <div className=" bg-gray-50 text-gray-900 font-sans flex py-12 justify-center">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-md"
