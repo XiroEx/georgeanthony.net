@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 //import { Mail, Phone, DollarSign } from "lucide-react";
 
 export default function FinancialServicesSite() {
@@ -19,32 +20,65 @@ export default function FinancialServicesSite() {
 
         <section id="services" className="mb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow duration-300">
+          <Dialog>
+            <DialogTrigger>
+              <Card className="cursor-pointer hover:shadow-lg text-left">
                 <CardContent className="p-6">
-                <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Businesses and Professionals</h5>
-                <h2 className="text-sm mb-4 text-[#7200a2] uppercase" > fintech consulting and advisory servcies</h2>
+                  <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Businesses and Professionals</h5>
+                  <h2 className="text-sm mb-4 text-[#7200a2] uppercase" > fintech consulting and advisory servcies</h2>
                   <p className="text-gray-600 text-sm mb-2 italic">Consulting. Advising. Investing.</p>
                   <p className="text-gray-600 text-sm">
                     We support businesses and professionals with strategic advice, fintech guidance, and managed investment services tailored to evolving financial needs.
                   </p>
                 </CardContent>
               </Card>
-            </div>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="text-[#7200a2]">
+                  For Businesses and Professionals
+                </DialogTitle>
+                <DialogDescription className="text-gray-600">
+                  
+                </DialogDescription>
 
-            {/* Services for Individuals and Families */}
-            <div>
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow duration-300">
+              </DialogHeader>
+
+            </DialogContent>
+          </Dialog>
+
+          
+          <Dialog>
+            <DialogTrigger>
+              <Card className="cursor-pointer hover:shadow-lg text-left">
                 <CardContent className="p-6">
-                  <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Families and Individuals</h5>
-                  <h2 className="text-sm mb-4 text-[#7200a2] uppercase" >financial planning & insurance coverage</h2>
-                  <p className="text-gray-600 text-sm mb-2 italic">Protect. Invest. Grow.</p>
-                  <p className="text-gray-600 text-sm">
-                    Offering term and whole life insurance, accident and disability protection, and hospital benefit products to provide financial security and legacy planning.
-                  </p>
-                </CardContent>
+                <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Families and Individuals</h5>
+                <h2 className="text-sm mb-4 text-[#7200a2] uppercase" >financial planning & insurance coverage</h2>
+                <p className="text-gray-600 text-sm mb-2 italic">Protect. Invest. Grow.</p>
+                <p className="text-gray-600 text-sm">
+                  Offering term and whole life insurance, accident and disability protection, and hospital benefit products to provide financial security and legacy planning.
+                </p>
+              </CardContent>
               </Card>
-            </div>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="text-[#7200a2]">
+                  For Families and Individuals
+                </DialogTitle>
+                <DialogDescription className="text-gray-600">
+                      <li>Term and whole life insurance</li>
+                      <li>Accident and disability protection</li>
+                      <li>Hospital benefit products</li>
+                      <li>Legacy planning and estate management</li>
+                      <li>Financial security solutions</li>
+                </DialogDescription>
+
+              </DialogHeader>
+
+            </DialogContent>
+          </Dialog>
+
           </div>
         </section>
 
