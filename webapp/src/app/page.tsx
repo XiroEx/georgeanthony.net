@@ -2,9 +2,25 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
 import Link from "next/link";
+import RotatingImage from "@/components/rotating_image";
 //import { Mail, Phone, DollarSign } from "lucide-react";
+
+
+  const familyImages = [
+      'https://media.istockphoto.com/id/1313461844/photo/beautiful-multi-generational-family-sitting-together-on-couch-at-home-and-smiling-at-camera.jpg?s=612x612&w=0&k=20&c=d4e5uOqHr4gnv7H6jAqUD8fsdYUHetuVXrGWHgDNBpw=',
+      'https://www.waldenu.edu/sites/g/files/krcnkv446/files/styles/atge_default_md/public/2024-03/SEO-2530-bs-Portrait-Of-Smiling-Multi-Gene-431323901-1200x630.png?itok=c118ljeU',
+      'https://s29980.pcdn.co/wp-content/uploads/2016/08/family-multigenerational-parents-children.jpg',
+      'https://assets.inman.com/wp-content/uploads/2019/05/GettyImages-916122268.jpg',
+      ''
+  ];
+
+  const bizImages = [
+    'https://www.purdueglobal.edu/blog/business/financial-advisor-career.jpg',
+    'https://www.investopedia.com/thmb/0oNO_SAlgKD3LMdsM4W3spJKnZk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/thinkstockphotos-480070051-5bfc34ccc9e77c00519c6414.jpg',
+    'https://assets.everspringpartners.com/dims4/default/a947561/2147483647/strip/true/crop/1518x612+0+0/resize/800x323!/format/jpg/quality/90/?url=http%3A%2F%2Feverspring-brightspot.s3.us-east-1.amazonaws.com%2F1d%2F30%2F93e3c8c4433dab3f70e89babe519%2Fmsfa-what-is-fintech.jpg'
+  ]
 
 export default function FinancialServicesSite() {
   return (
@@ -34,13 +50,31 @@ export default function FinancialServicesSite() {
                 </CardContent>
               </Card>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="p-0 pt-8 pb-6">
               <DialogHeader>
                 <DialogTitle className="text-[#7200a2]">
                   For Businesses and Professionals
                 </DialogTitle>
-                <DialogDescription className="text-gray-600">
-                  
+                <DialogDescription className="text-gray-600 p-0 mt-2">
+                  <div className="flex flex-col p-0 gap-4">
+                    <RotatingImage {...{images:bizImages}} />
+                    <div>
+                      <ul className="gap-2 flex flex-col">
+                        <li>Fintech consulting and advisory services</li>
+                        <li>Managed investment services</li>
+                        <li>Strategic financial planning</li>
+                        <li>Business growth and development</li>
+                        <li>Investment management and analysis</li>
+                      </ul>
+                    </div>
+                    <div className="mt-2">
+                      <DialogClose asChild>
+                        <Link href="#contact">
+                          <Button className="bg-[#7200a2] hover:bg-purple-800 text-white">Get Started</Button>
+                        </Link>
+                      </DialogClose>
+                    </div>
+                  </div>
                 </DialogDescription>
 
               </DialogHeader>
@@ -62,17 +96,31 @@ export default function FinancialServicesSite() {
               </CardContent>
               </Card>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="p-0 pt-8 pb-6">
               <DialogHeader>
                 <DialogTitle className="text-[#7200a2]">
                   For Families and Individuals
                 </DialogTitle>
-                <DialogDescription className="text-gray-600">
-                      <li>Term and whole life insurance</li>
-                      <li>Accident and disability protection</li>
-                      <li>Hospital benefit products</li>
-                      <li>Legacy planning and estate management</li>
-                      <li>Financial security solutions</li>
+                <DialogDescription className="text-gray-600 p-0 mt-2">
+                  <div className="flex flex-col p-0 gap-4">
+                    <RotatingImage {...{images: familyImages}}/>
+                    <div>
+                      <ul className="gap-2 flex flex-col">
+                        <li>Term and whole life insurance</li>
+                        <li>Accident and disability protection</li>
+                        <li>Hospital benefit products</li>
+                        <li>Legacy planning and estate management</li>
+                        <li>Financial security solutions</li>
+                      </ul>
+                    </div>
+                    <div className="mt-2">
+                      <DialogClose asChild>
+                        <Link href="#contact">
+                          <Button className="bg-[#7200a2] hover:bg-purple-800 text-white">Get Started</Button>
+                        </Link>
+                      </DialogClose>
+                    </div>
+                  </div>
                 </DialogDescription>
 
               </DialogHeader>
