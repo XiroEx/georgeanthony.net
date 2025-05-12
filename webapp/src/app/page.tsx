@@ -1,3 +1,4 @@
+import Hero from "@/components/hero";
 import RotatingImage from "@/components/rotating_image";
 import ServiceDialogue from "@/components/service_dialogue";
 import TickerTape from "@/components/ticker_tape";
@@ -46,14 +47,7 @@ export default async function FinancialServicesSite() {
       <TickerTape text={(new Date()).toDateString() + " - " + newsSummary} />
 
       <main className="px-6 py-12 max-w-5xl mx-auto">
-        <section className="mb-16 text-center">
-          <h2 className="text-4xl font-bold mb-4">Take Control of Your Financial Future</h2>
-          <p className="text-lg text-gray-600 mb-6">
-            Comprehensive services to protect your family, grow your wealth, and support your business goals.
-          </p>
-          <Button className="px-6 py-3 text-lg bg-[#7200a2] hover:bg-purple-800 text-white"><Link href='#contact'>Get Started</Link></Button>
-        </section>
-
+        <Hero />
         <section id="services" className="mb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ServiceDialogue
