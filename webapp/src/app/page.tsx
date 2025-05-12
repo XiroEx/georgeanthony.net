@@ -3,6 +3,7 @@ import Services from "@/components/service_section";
 import TickerTape from "@/components/ticker_tape";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Suspense } from "react";
 //import { Mail, Phone, DollarSign } from "lucide-react";
 
 
@@ -31,8 +32,10 @@ export default async function FinancialServicesSite() {
       <TickerTape text={(new Date()).toDateString() + " - " + newsSummary} />
 
       <main className="px-6 py-12 max-w-5xl mx-auto">
-        <Hero />
-        <Services />
+        <Suspense>
+          <Hero />
+          <Services />
+        </Suspense>
         
 
         <section id="about" className="mb-16">
