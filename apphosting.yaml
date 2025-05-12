@@ -1,0 +1,4 @@
+# apphosting.yaml file
+env:
+  - variable: NEXT_PUBLIC_SITE_URL
+    value: "https://georgeanthony.net"
