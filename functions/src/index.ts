@@ -3,6 +3,7 @@ import * as logger from "firebase-functions/logger";
 import {onSchedule} from "firebase-functions/v2/scheduler";
 import {getTopFinancialNews} from "./modules/ai";
 import {onRequest} from "firebase-functions/https";
+import {Client} from "discord.js-light";
 
 /**
  * A scheduled Cloud Function that runs at specific times to fetch top financial news
@@ -77,7 +78,7 @@ export const scheduledFunction = onSchedule(
  * @param req - The HTTP request object.
  * @param res - The HTTP response object.
  */
-export const quote = onRequest((req, res) => {
+export const quote = onRequest(async (req, res) => {
   const {name, dob, email, phone} = req.body;
   const formData = {name, dob, email, phone};
   const apiKey = process.env.OPENAI_API_KEY; // Ensure this environment variable is set
@@ -86,6 +87,16 @@ export const quote = onRequest((req, res) => {
     return;
   }
   if (checkData(formData)) {
+    // send discord message to user (key=DISCORD_API_KEY, user=DISCORD_USER_ID)
+    const client = new Client({intents: []});
+    const userId = process.env.DISCORD_USER_ID!;
+    const user = await client.users.fetch(userId);
+    if (!user) {
+      res.status(500).send("User not found.");
+      return;
+    }
+    const message = `Quote request from ${name} (${dob})\nEmail: ${email}\nPhone: ${phone}`;
+    await user.send(message);
     res.status(200).send("Quote request sent successfully!");
   } else {
     res.status(400).send("Please fill in all required fields and provide a valid email or phone number.");

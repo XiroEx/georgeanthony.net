@@ -38,10 +38,8 @@ export default function Quote() {
       return;
     }
 
-    const baseUrl = "https://us-central1-georgeanthonycrm.cloudfunctions.net/quote";
-
     try {
-      const res = await fetch(`${baseUrl}/api/quote`, {
+      const res = await fetch(`https://quote-ldgqw3kyla-uc.a.run.app`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
