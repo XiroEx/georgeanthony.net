@@ -1,7 +1,6 @@
-'use client' //not forever
-
 import RotatingImage from "@/components/rotating_image";
 import ServiceDialogue from "@/components/service_dialogue";
+import TickerTape from "@/components/ticker_tape";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -23,9 +22,26 @@ import Link from "next/link";
     'https://assets.everspringpartners.com/dims4/default/a947561/2147483647/strip/true/crop/1518x612+0+0/resize/800x323!/format/jpg/quality/90/?url=http%3A%2F%2Feverspring-brightspot.s3.us-east-1.amazonaws.com%2F1d%2F30%2F93e3c8c4433dab3f70e89babe519%2Fmsfa-what-is-fintech.jpg'
   ]
 
-export default function FinancialServicesSite() {
+async function fetchNewsSummary() {
+  const baseUrl = "http://localhost:3000"; // Fallback to localhost for development
+
+  try {
+    const res = await fetch(`${baseUrl}/api/news`);
+    console.log(res);
+    const data = await res.json();
+    return data.newsSummary || "";
+  } catch (error) {
+    console.error("Error fetching news summary:", error);
+    return "Unable to fetch news summary.";
+  }
+}
+
+export default async function FinancialServicesSite() {
+  const newsSummary = await fetchNewsSummary();
+
   return (
     <div className=" bg-gray-50 text-gray-900 font-sans">
+      <TickerTape text={(new Date()).toDateString() + " - " + newsSummary} />
 
       <main className="px-6 py-12 max-w-5xl mx-auto">
         <section className="mb-16 text-center">
