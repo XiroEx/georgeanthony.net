@@ -1,10 +1,11 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
-import Link from "next/link";
+'use client' //not forever
+
 import RotatingImage from "@/components/rotating_image";
+import ServiceDialogue from "@/components/service_dialogue";
+import { Button } from "@/components/ui/button";
+import { DialogClose } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
 //import { Mail, Phone, DollarSign } from "lucide-react";
 
 
@@ -37,37 +38,64 @@ export default function FinancialServicesSite() {
 
         <section id="services" className="mb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Dialog>
-            <DialogTrigger>
-              <Card className="cursor-pointer hover:shadow-lg text-left">
-                <CardContent className="p-6">
-                  <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Businesses and Professionals</h5>
-                  <h2 className="text-sm mb-4 text-[#7200a2] uppercase" > fintech consulting and advisory servcies</h2>
-                  <p className="text-gray-600 text-sm mb-2 italic">Consulting. Advising. Investing.</p>
-                  <p className="text-gray-600 text-sm">
-                    We support businesses and professionals with strategic advice, fintech guidance, and managed investment services tailored to evolving financial needs.
-                  </p>
-                </CardContent>
-              </Card>
-            </DialogTrigger>
-            <DialogContent className="p-0 pt-8 pb-6">
-              <DialogHeader>
-                <DialogTitle className="text-[#7200a2] text-center">
-                  For Businesses and Professionals
-                </DialogTitle>
-                <DialogDescription> Consulting. Advising. Investing. </DialogDescription>
-                <div id="financial-services" className="text-gray-600 p-0 mt-2 text-center">
-                  <div className="flex flex-col p-0 gap-4">
-                    <RotatingImage {...{images:bizImages}} />
-                    <div>
-                      <ul className="gap-2 flex flex-col">
-                        <li>Fintech consulting and advisory services</li>
-                        <li>Managed investment services</li>
-                        <li>Strategic financial planning</li>
-                        <li>Business growth and development</li>
-                        <li>Investment management and analysis</li>
-                      </ul>
-                    </div>
+          <ServiceDialogue
+            cardContent={<>
+              <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Businesses and Professionals</h5>
+              <h2 className="text-sm mb-4 text-[#7200a2] uppercase" > fintech consulting and advisory servcies</h2>
+              <p className="text-gray-600 text-sm mb-2 italic">Consulting. Advising. Investing.</p>
+              <p className="text-gray-600 text-sm">
+                We support businesses and professionals with strategic advice, fintech guidance, and managed investment services tailored to evolving financial needs.
+              </p>
+            </>}
+            title="For Businesses and Professionals"
+            slogan="Consulting. Advising. Investing."
+            content={
+              <div className="text-gray-600 p-0 mt-2 text-center">
+                <div className="flex flex-col p-0 gap-4">
+                  <RotatingImage {...{images: bizImages}} />
+                  <div>
+                    <ul className="gap-2 flex flex-col">
+                      <li>Fintech consulting and advisory services</li>
+                      <li>Managed investment services</li>
+                      <li>Strategic financial planning</li>
+                      <li>Business growth and development</li>
+                      <li>Investment management and analysis</li>
+                    </ul>
+                  </div>
+                    <DialogClose asChild>
+                      <Link href="#contact">
+                        <Button className="bg-[#7200a2] hover:bg-purple-800 text-white">Get Started</Button>
+                      </Link>
+                    </DialogClose>
+                </div>
+              </div>
+            }
+          />
+
+          <ServiceDialogue
+            cardContent={<>
+              <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Families and Individuals</h5>
+              <h2 className="text-sm mb-4 text-[#7200a2] uppercase" >financial planning & insurance coverage</h2>
+              <p className="text-gray-600 text-sm mb-2 italic">Protect. Invest. Grow.</p>
+              <p className="text-gray-600 text-sm">
+                Offering term and whole life insurance, accident and disability protection, and hospital benefit products to provide financial security and legacy planning.
+              </p>
+            </>}
+            title="For Families and Individuals"
+            slogan="Protect. Invest. Grow."
+            content={
+              <div className="text-gray-600 p-0 mt-2 text-center">
+                <div className="flex flex-col p-0 gap-4">
+                  <RotatingImage {...{images: familyImages}} />
+                  <div>
+                    <ul className="gap-2 flex flex-col">
+                      <li>Term and whole life insurance</li>
+                      <li>Accident and disability protection</li>
+                      <li>Hospital benefit products</li>
+                      <li>Legacy planning and estate management</li>
+                      <li>Financial security solutions</li>
+                    </ul>
+                  </div>
                     <div className="mt-2">
                       <DialogClose asChild>
                         <Link href="#contact">
@@ -75,60 +103,10 @@ export default function FinancialServicesSite() {
                         </Link>
                       </DialogClose>
                     </div>
-                  </div>
                 </div>
-
-              </DialogHeader>
-
-            </DialogContent>
-          </Dialog>
-
-          
-          <Dialog>
-            <DialogTrigger>
-              <Card className="cursor-pointer hover:shadow-lg text-left">
-                <CardContent className="p-6">
-                <h5 className="font-semibold text-xl mb-2 text-[#7200a2]">For Families and Individuals</h5>
-                <h2 className="text-sm mb-4 text-[#7200a2] uppercase" >financial planning & insurance coverage</h2>
-                <p className="text-gray-600 text-sm mb-2 italic">Protect. Invest. Grow.</p>
-                <p className="text-gray-600 text-sm">
-                  Offering term and whole life insurance, accident and disability protection, and hospital benefit products to provide financial security and legacy planning.
-                </p>
-              </CardContent>
-              </Card>
-            </DialogTrigger>
-            <DialogContent className="p-0 pt-8 pb-6">
-              <DialogHeader>
-                <DialogTitle className="text-[#7200a2] text-center">
-                  For Families and Individuals
-                </DialogTitle>
-                <DialogDescription> Protect. Invest. Grow. </DialogDescription>
-                <div className="text-gray-600 p-0 mt-2 text-center">
-                  <div className="flex flex-col p-0 gap-4">
-                    <RotatingImage {...{images: familyImages}}/>
-                    <div>
-                      <ul className="gap-2 flex flex-col">
-                        <li>Term and whole life insurance</li>
-                        <li>Accident and disability protection</li>
-                        <li>Hospital benefit products</li>
-                        <li>Legacy planning and estate management</li>
-                        <li>Financial security solutions</li>
-                      </ul>
-                    </div>
-                    <div className="mt-2">
-                      <DialogClose asChild>
-                        <Link href="#contact">
-                          <Button className="bg-[#7200a2] hover:bg-purple-800 text-white">Get Started</Button>
-                        </Link>
-                      </DialogClose>
-                    </div>
-                  </div>
-                </div>
-
-              </DialogHeader>
-
-            </DialogContent>
-          </Dialog>
+              </div>
+            }
+          />
 
           </div>
         </section>
