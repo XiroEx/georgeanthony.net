@@ -15,7 +15,6 @@ async function fetchNewsSummary() {
 
   try {
     const res = await fetch(`${baseUrl}/api/news`);
-    console.log(res);
     const data = await res.json();
     return data.newsSummary || "";
   } catch (error) {

@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation"
 
 export default function Services(){
     const query = useSearchParams();
-    const hasQuote = query.has('quote');
+    const hasLife = query.has('life');
 
     const BUSINESS = {
         cardContent: <>
@@ -65,7 +65,7 @@ export default function Services(){
     return (
         <section id="services" className="mb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {hasQuote ? <>
+            {hasLife ? <>
                 <ServiceDialogue {...FAMILY} />    
                 <ServiceDialogue {...BUSINESS} />
             </> : <>
