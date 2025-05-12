@@ -56,7 +56,7 @@ export default function TickerTape({ text }: { text: string }) {
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
                 width: '100%',
-                height: '56px',
+                height: '48px',
                 position: 'relative',
                 backgroundColor: '#7200a2',
                 color: '#fff',

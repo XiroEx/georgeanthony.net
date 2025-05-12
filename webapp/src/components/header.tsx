@@ -16,7 +16,7 @@ export default function Header() {
         <h1 className="text-2xl font-bold text-[#7200a2]"><Link href={`/${queryString}`}>George Anthony</Link></h1>
         <nav className="space-x-6 flex items-center">
         
-            {!path.includes('life') && query.has('life') && <Link href={`/quote${queryString}`} className="hover:text-[#7200a2]">Get a Quote</Link>}
+            {!path.includes('quote') && query.has('life') && <Link href={`/quote${queryString}`} className="hover:text-[#7200a2]">Get a Quote</Link>}
             <div className="hidden md:block space-x-4">
                 <Link href={`/about${queryString}`} className="hover:text-[#7200a2]">About</Link>
                 <Link href={`/${queryString}#contact`} className="hover:text-[#7200a2]">Contact</Link>
