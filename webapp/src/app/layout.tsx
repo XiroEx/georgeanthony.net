@@ -3,6 +3,7 @@ import Header from "@/components/header";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
+        <Suspense><Header /></Suspense>
         {children}
         <footer className="bg-white border-t p-6 text-center text-sm text-gray-500">
           <p>&copy; 2025 George Anthony. All rights reserved.</p>

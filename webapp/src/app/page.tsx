@@ -145,7 +145,7 @@ export default function FinancialServicesSite() {
           <form className="grid grid-cols-1 gap-4 max-w-md mx-auto">
             <Input placeholder="Your Name" />
             <Input type="email" placeholder="Your Email" />
-            <Input placeholder="Your Message" />
+            <Input placeholder="What are you looking for?" />
             <Button type="submit" className="bg-[#7200a2] hover:bg-purple-800 text-white">Send Message</Button>
           </form>
         </section>
