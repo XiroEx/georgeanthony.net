@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function AboutPage() {
@@ -33,9 +34,9 @@ export default function AboutPage() {
           <p className="text-gray-700 mb-6">
             Ready to take the next step? Contact us today to learn how we can help you achieve your financial goals.
           </p>
-          <a href="/#contact" className="px-6 py-3 text-lg bg-[#7200a2] hover:bg-purple-800 text-white rounded">
+          <Link href="/#contact" className="px-6 py-3 text-lg bg-[#7200a2] hover:bg-purple-800 text-white rounded">
             Contact Us
-          </a>
+          </Link>
         </section>
       </main>
     </div>

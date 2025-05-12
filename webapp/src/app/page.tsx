@@ -55,7 +55,8 @@ export default function FinancialServicesSite() {
                 <DialogTitle className="text-[#7200a2] text-center">
                   For Businesses and Professionals
                 </DialogTitle>
-                <DialogDescription className="text-gray-600 p-0 mt-2 text-center">
+                <DialogDescription> Consulting. Advising. Investing. </DialogDescription>
+                <div id="financial-services" className="text-gray-600 p-0 mt-2 text-center">
                   <div className="flex flex-col p-0 gap-4">
                     <RotatingImage {...{images:bizImages}} />
                     <div>
@@ -75,7 +76,7 @@ export default function FinancialServicesSite() {
                       </DialogClose>
                     </div>
                   </div>
-                </DialogDescription>
+                </div>
 
               </DialogHeader>
 
@@ -101,7 +102,8 @@ export default function FinancialServicesSite() {
                 <DialogTitle className="text-[#7200a2] text-center">
                   For Families and Individuals
                 </DialogTitle>
-                <DialogDescription className="text-gray-600 p-0 mt-2 text-center">
+                <DialogDescription> Protect. Invest. Grow. </DialogDescription>
+                <div className="text-gray-600 p-0 mt-2 text-center">
                   <div className="flex flex-col p-0 gap-4">
                     <RotatingImage {...{images: familyImages}}/>
                     <div>
@@ -121,7 +123,7 @@ export default function FinancialServicesSite() {
                       </DialogClose>
                     </div>
                   </div>
-                </DialogDescription>
+                </div>
 
               </DialogHeader>
 
