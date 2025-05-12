@@ -23,17 +23,14 @@ import Link from "next/link";
   ]
 
 async function fetchNewsSummary() {
-  const baseUrl = "http://localhost:3000"; // Fallback to localhost for development
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || // Use environment variable if set
+    "http://localhost:3000"; // Fallback to localhost for development
 
-  try {
-    const res = await fetch(`${baseUrl}/api/news`);
-    console.log(res);
-    const data = await res.json();
-    return data.newsSummary || "";
-  } catch (error) {
-    console.error("Error fetching news summary:", error);
-    return "Unable to fetch news summary.";
-  }
+  const res = await fetch(`${baseUrl}/api/news`);
+  console.log(res)
+  const data = await res.json();
+  return data.newsSummary || "";
 }
 
 export default async function FinancialServicesSite() {
