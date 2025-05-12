@@ -3,6 +3,7 @@ import * as logger from "firebase-functions/logger";
 import {getTopFinancialNews} from "./modules/ai";
 import {getFirestore} from "firebase-admin/firestore";
 import {initializeApp} from "firebase-admin";
+import { getApps } from "firebase-admin/app";
 
 
 // Cloud Function triggered by a scheduled event
@@ -27,8 +28,9 @@ export const scheduledFunction = onSchedule(
       const hour = new Date().getHours();
 
       // Initialize Firebase Admin SDK
-      initializeApp();
-
+      if (!getApps().length) {
+        initializeApp();
+      }
       const firestore = getFirestore();
       const docRef = firestore.collection("news").doc(date);
 
