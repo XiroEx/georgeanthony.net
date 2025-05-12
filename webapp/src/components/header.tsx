@@ -24,10 +24,10 @@ export default function Header() {
                     <DropdownMenuTrigger><span className="hover:text-[#7220a2]">☰</span></DropdownMenuTrigger>
                     <DropdownMenuContent>
                         <DropdownMenuItem asChild>
-                            <Link href="/about" className="block hover:text-[#7200a2] cursor-pointer">About</Link>
+                            <Link href="/about" className="block hover:text-[#7200a2] cursor-pointer my-2">About</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                            <Link href="/#contact" className="block hover:text-[#7200a2] cursor-pointer">Contact</Link>
+                            <Link href="/#contact" className="block hover:text-[#7200a2] cursor-pointer my-2">Contact</Link>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
