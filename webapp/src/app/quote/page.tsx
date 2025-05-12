@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
 
 export default function Quote() {
   const [formData, setFormData] = useState({
@@ -17,7 +17,8 @@ export default function Quote() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     const { name, dob, email, phone } = formData;
     e.preventDefault();
     if (!checkData()) {
@@ -37,7 +38,26 @@ export default function Quote() {
       return;
     }
 
-    console.log("Submitted Data:", formData);
+    const baseUrl = "https://us-central1-georgeanthonycrm.cloudfunctions.net/quote";
+
+    try {
+      const res = await fetch(`${baseUrl}/api/quote`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, dob, email, phone }),
+      });
+      
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      alert("Quote request sent successfully!");
+    } catch (error) {
+      console.error("Error fetching news summary:", error);
+      return "Unable to fetch news summary.";
+    }
+
   };
 
   function checkData() {
@@ -84,7 +104,7 @@ export default function Quote() {
         </h1>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-            Name
+            Name <span className="text-red-500">*</span>
           </label>
           <Input
             id="name"
@@ -99,7 +119,7 @@ export default function Quote() {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dob">
-            Date of Birth
+            Date of Birth <span className="text-red-500">*</span>
           </label>
           <Input
             id="dob"
@@ -113,7 +133,7 @@ export default function Quote() {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-            Email
+            Email <span className="text-red-500">{formData.phone.trim() === "" ? "*" : ""}</span>
           </label>
           <Input
             id="email"
@@ -127,7 +147,7 @@ export default function Quote() {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
-            Phone
+            Phone <span className="text-red-500">{formData.email.trim() === "" ? "*" : ""}</span>
           </label>
           <Input
             id="phone"
