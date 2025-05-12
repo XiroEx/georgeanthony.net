@@ -27,10 +27,15 @@ async function fetchNewsSummary() {
     process.env.NEXT_PUBLIC_SITE_URL || // Use environment variable if set
     "http://localhost:3000"; // Fallback to localhost for development
 
-  const res = await fetch(`${baseUrl}/api/news`);
-  console.log(res)
-  const data = await res.json();
-  return data.newsSummary || "";
+  try {
+    const res = await fetch(`${baseUrl}/api/news`);
+    console.log(res);
+    const data = await res.json();
+    return data.newsSummary || "";
+  } catch (error) {
+    console.error("Error fetching news summary:", error);
+    return "Unable to fetch news summary.";
+  }
 }
 
 export default async function FinancialServicesSite() {
