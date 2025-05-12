@@ -38,7 +38,9 @@ export async function getTopFinancialNews(apiKey: string): Promise<string> {
       throw new Error(`Failed to fetch financial news: ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const data = await response.json() as {
+      choices: { message: { content: string } }[];
+    };
     const headlines = data.choices[0].message.content.trim();
     return headlines;
   } catch (error) {

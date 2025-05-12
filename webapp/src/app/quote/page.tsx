@@ -1,10 +1,12 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogOverlay, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 
 export default function Quote() {
+  const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -50,7 +52,7 @@ export default function Quote() {
       if (!res.ok) {
         throw new Error("Network response was not ok");
       }
-      alert("Quote request sent successfully!");
+      setSuccess(true);
     } catch (error) {
       console.error("Error fetching news summary:", error);
       return "Unable to fetch news summary.";
@@ -170,6 +172,21 @@ export default function Quote() {
           Submit
         </Button>
       </form>
+      <Dialog open={success} onOpenChange={setSuccess}>
+        <DialogOverlay className="fixed inset-0 bg-black opacity-30" />
+        <DialogContent className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-lg">
+          <DialogTitle className="text-lg font-bold">Success!</DialogTitle>
+          <DialogDescription className="mt-2">
+            Your quote request has been sent successfully!
+          </DialogDescription>
+          <Button
+            onClick={() => setSuccess(false)}
+            className="mt-4 bg-[#7200a2] hover:bg-purple-800 text-white"
+          >
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

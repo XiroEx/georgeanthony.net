@@ -4,6 +4,11 @@ import {onSchedule} from "firebase-functions/v2/scheduler";
 import {getTopFinancialNews} from "./modules/ai";
 import {onRequest} from "firebase-functions/https";
 import {Client} from "discord.js-light";
+import cors from "cors";
+import {initializeApp} from "firebase-admin/app";
+
+const corsHandler = cors({origin: true});
+initializeApp();
 
 /**
  * A scheduled Cloud Function that runs at specific times to fetch top financial news
@@ -78,29 +83,40 @@ export const scheduledFunction = onSchedule(
  * @param req - The HTTP request object.
  * @param res - The HTTP response object.
  */
+
+
 export const quote = onRequest(async (req, res) => {
-  const {name, dob, email, phone} = req.body;
-  const formData = {name, dob, email, phone};
-  const apiKey = process.env.OPENAI_API_KEY; // Ensure this environment variable is set
-  if (!apiKey) {
-    res.status(500).send("API key is not set. Please set the OPENAI_API_KEY environment variable.");
-    return;
-  }
-  if (checkData(formData)) {
-    // send discord message to user (key=DISCORD_API_KEY, user=DISCORD_USER_ID)
-    const client = new Client({intents: []});
-    const userId = process.env.DISCORD_USER_ID!;
-    const user = await client.users.fetch(userId);
-    if (!user) {
-      res.status(500).send("User not found.");
+  corsHandler(req, res, async () => {
+    const {name, dob, email, phone} = req.body;
+    const formData = {name, dob, email, phone};
+    const apiKey = process.env.DISCORD_API_KEY; // Ensure this environment variable is set
+    if (!apiKey) {
+      res.status(500).send("API key is not set. Please set the environment variable.");
       return;
     }
-    const message = `Quote request from ${name} (${dob})\nEmail: ${email}\nPhone: ${phone}`;
-    await user.send(message);
-    res.status(200).send("Quote request sent successfully!");
-  } else {
-    res.status(400).send("Please fill in all required fields and provide a valid email or phone number.");
-  }
+    if (checkData(formData)) {
+      // send discord message to user (key=DISCORD_API_KEY, user=DISCORD_USER_ID)
+      const client = new Client({intents: []});
+      await client.login(apiKey);
+      const userId = process.env.DISCORD_USER_ID;
+      if (!userId) {
+        res.status(500).send("User ID is not set. Please set the DISCORD_USER_ID environment variable.");
+        return;
+      }
+      const user = await client.users.fetch(userId);
+      if (!user) {
+        res.status(500).send("User not found.");
+        return;
+      }
+      const age = new Date().getFullYear() - new Date(dob).getFullYear();
+      const dobDate = new Date(dob).toLocaleDateString("en-US", {timeZone: "UTC"});
+      const message = `Quote request from ${name} \nAge: ${age} (${dobDate})\nEmail: ${email}\nPhone: ${phone}`;
+      await user.send(message);
+      res.status(200).send("Quote request sent successfully!");
+    } else {
+      res.status(400).send("Please fill in all required fields and provide a valid email or phone number.");
+    }
+  });
 });
 
 /**

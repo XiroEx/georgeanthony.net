@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "esModuleInterop": true,
-    "moduleResolution": "nodenext",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
-    "sourceMap": true,
-    "strict": true,
-    "target": "es2017"
+    "target": "ES2020", // Modern JavaScript target
+    "module": "commonjs", // Required for Node.js
+    "lib": ["ES2020"], // Include modern JavaScript libraries
+    "strict": true, // Enable strict type-checking options
+    "esModuleInterop": true, // Allow default imports from CommonJS modules
+    "forceConsistentCasingInFileNames": true, // Enforce consistent casing in imports
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "outDir": "lib", // Output directory for compiled files
+    "rootDir": "src" // Root directory of source files
   },
-  "compileOnSave": true,
-  "include": [
-    "src"
-  ]
+  "include": ["src"], // Include the source folder
+  "exclude": ["node_modules", "lib"] // Exclude unnecessary folders
 }
+
