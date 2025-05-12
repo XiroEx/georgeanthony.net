@@ -52,10 +52,10 @@ export default function FinancialServicesSite() {
             </DialogTrigger>
             <DialogContent className="p-0 pt-8 pb-6">
               <DialogHeader>
-                <DialogTitle className="text-[#7200a2]">
+                <DialogTitle className="text-[#7200a2] text-center">
                   For Businesses and Professionals
                 </DialogTitle>
-                <DialogDescription className="text-gray-600 p-0 mt-2">
+                <DialogDescription className="text-gray-600 p-0 mt-2 text-center">
                   <div className="flex flex-col p-0 gap-4">
                     <RotatingImage {...{images:bizImages}} />
                     <div>
@@ -98,10 +98,10 @@ export default function FinancialServicesSite() {
             </DialogTrigger>
             <DialogContent className="p-0 pt-8 pb-6">
               <DialogHeader>
-                <DialogTitle className="text-[#7200a2]">
+                <DialogTitle className="text-[#7200a2] text-center">
                   For Families and Individuals
                 </DialogTitle>
-                <DialogDescription className="text-gray-600 p-0 mt-2">
+                <DialogDescription className="text-gray-600 p-0 mt-2 text-center">
                   <div className="flex flex-col p-0 gap-4">
                     <RotatingImage {...{images: familyImages}}/>
                     <div>
