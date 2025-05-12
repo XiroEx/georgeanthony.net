@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogOverlay, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export default function Quote() {
@@ -183,7 +184,7 @@ export default function Quote() {
             onClick={() => setSuccess(false)}
             className="mt-4 bg-[#7200a2] hover:bg-purple-800 text-white"
           >
-            Close
+            <Link href='/?life'>Close</Link>
           </Button>
         </DialogContent>
       </Dialog>

@@ -52,10 +52,10 @@ export default function Services(){
                 <div>
                     <ul className="gap-2 flex flex-col">
                         <li>Term and whole life insurance</li>
-                        <li>Accident and disability protection</li>
+                        <li>Accident and dismemberment protection</li>
                         <li>Hospital benefit products</li>
-                        <li>Legacy planning and estate management</li>
                         <li>Financial security solutions</li>
+                        <li>Legacy planning</li>
                     </ul>
                 </div>
             </div>
