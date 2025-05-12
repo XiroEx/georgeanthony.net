@@ -9,8 +9,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 export default function Header() {
     const path = usePathname();
     const query = useSearchParams();
-    console.log(query.has('quote'));
-    console.log(query)
 
     return <header className="bg-white shadow p-6 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-[#7200a2]"><Link href="/">George Anthony</Link></h1>
@@ -25,8 +23,12 @@ export default function Header() {
                 <DropdownMenu>
                     <DropdownMenuTrigger><span className="hover:text-[#7220a2]">☰</span></DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuItem><Link href="about" className="block hover:text-[#7200a2]">About</Link></DropdownMenuItem>
-                        <DropdownMenuItem><Link href="/#contact" className="block hover:text-[#7200a2]">Contact</Link></DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                            <Link href="/about" className="block hover:text-[#7200a2] cursor-pointer">About</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                            <Link href="/#contact" className="block hover:text-[#7200a2] cursor-pointer">Contact</Link>
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
