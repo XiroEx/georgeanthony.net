@@ -1,12 +1,8 @@
 'use client'
 
-import Link from "next/link"
 import RotatingImage from "./rotating_image"
 import ServiceDialogue from "./service_dialogue"
-import { DialogClose } from "./ui/dialog"
-import { Button } from "./ui/button"
 import { useSearchParams } from "next/navigation"
-import { CardContent } from "./ui/card"
 
 
 export default function Services(){
