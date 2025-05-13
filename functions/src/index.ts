@@ -31,7 +31,7 @@ initializeApp();
 export const scheduledFunction = onSchedule(
   {
     schedule: "0 0,2,4,6-22 * * *", // Cron schedule: 12am, 2am, 4am, and every hour from 6am to 10pm
-    timeZone: "UTC", // Adjust the time zone if needed
+    timeZone: "EST", // Adjust the time zone if needed
   },
   async () => {
     const apiKey = process.env.OPENAI_API_KEY; // Ensure this environment variable is set

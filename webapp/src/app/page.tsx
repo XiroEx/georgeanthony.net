@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Suspense } from "react";
 //import { Mail, Phone, DollarSign } from "lucide-react";
 
-
+export const revalidate = 0; // Disable caching for this page
 
 async function fetchNewsSummary() {
   const baseUrl =
