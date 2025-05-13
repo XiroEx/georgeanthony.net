@@ -39,7 +39,7 @@ export const scheduledFunction = onSchedule(
       logger.error("Google API key is not set. Please set the GOOGLE_API_KEY environment variable.");
       return;
     }
-    const cx = process.env.CX; // Ensure this environment variable is set
+    const cx = process.env.GOOGLE_CX; // Ensure this environment variable is set
     if (!cx) {
       logger.error("Custom Search Engine ID (CX) is not set. Please set the CX environment variable.");
       return;
