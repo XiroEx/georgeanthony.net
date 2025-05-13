@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Suspense } from "react";
 //import { Mail, Phone, DollarSign } from "lucide-react";
 
-export const revalidate = 0; // Disable caching for this page
+export const revalidate = 60; // Revalidate every 60 seconds
 
 async function fetchNewsSummary() {
   const baseUrl =
@@ -16,7 +16,7 @@ async function fetchNewsSummary() {
   try {
     const res = await fetch(`${baseUrl}/api/news`);
     const data = await res.json();
-    return data.newsSummary.toLowerCase() || "";
+    return data.newsSummary.toUpperCase() || "";
   } catch (error) {
     console.error("Error fetching news summary:", error);
     return "Unable to fetch news summary.";

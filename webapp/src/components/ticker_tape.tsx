@@ -84,7 +84,7 @@ export default function TickerTape({ text }: { text: string }) {
                     fontVariant: 'small-caps',
                 }}
             >
-                {formattedDate.toLowerCase()}{' - '}{text.startsWith('"') && text.endsWith('"') ? text.slice(1, -1) : text}
+                {formattedDate.toUpperCase()}{' - '}{text.startsWith('"') && text.endsWith('"') ? text.slice(1, -1) : text}
             </div>
         </div>
     );
