@@ -12,7 +12,7 @@ export default function Hero() {
 
     return (
         <section className="mb-16 text-center">
-          <h2 className="text-4xl font-bold mb-4">Take Control of Your Financial Future</h2>
+          <h2 className="text-4xl font-bold mb-4">Take Control</h2>
           <p className="text-lg text-gray-600 mb-6">
             Comprehensive services to protect your family, grow your wealth, and support your business goals.
           </p>
