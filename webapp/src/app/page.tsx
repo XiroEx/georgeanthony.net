@@ -16,7 +16,7 @@ async function fetchNewsSummary() {
   try {
     const res = await fetch(`${baseUrl}/api/news`);
     const data = await res.json();
-    return data.newsSummary || "";
+    return data.newsSummary.toLowerCase() || "";
   } catch (error) {
     console.error("Error fetching news summary:", error);
     return "Unable to fetch news summary.";
@@ -28,7 +28,7 @@ export default async function FinancialServicesSite() {
 
   return (
     <div className=" bg-gray-50 text-gray-900 font-sans">
-      <TickerTape text={(new Date()).toDateString() + " - " + newsSummary} />
+      <TickerTape text={newsSummary} />
 
       <main className="px-6 py-12 max-w-5xl mx-auto">
         <Suspense>

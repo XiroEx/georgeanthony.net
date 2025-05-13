@@ -50,13 +50,23 @@ export default function TickerTape({ text }: { text: string }) {
         }
     }, []);
 
+    // get users current date formatted as Mon Jan 1 2020
+    const currentDate = new Date().toLocaleDateString('en-US', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+    });
+    const formattedDate = currentDate.replace(/,/g, '').charAt(0).toUpperCase() + currentDate.replace(/,/g, '').slice(1);
+    console.log('Formatted Date:', formattedDate);
+
     return (
         <div
             style={{
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
                 width: '100%',
-                height: '48px',
+                height: '42px',
                 position: 'relative',
                 backgroundColor: '#7200a2',
                 color: '#fff',
@@ -74,7 +84,7 @@ export default function TickerTape({ text }: { text: string }) {
                     fontVariant: 'small-caps',
                 }}
             >
-                {text}
+                {formattedDate.toLowerCase()}{' - '}{text.startsWith('"') && text.endsWith('"') ? text.slice(1, -1) : text}
             </div>
         </div>
     );
