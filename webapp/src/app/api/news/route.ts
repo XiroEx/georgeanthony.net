@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import firebaseconfig from "../../../../public/firebaseconfig";
 
 export async function GET() {
-  const today = new Date().toLocaleDateString("en-US", { timeZone: "America/New_York" });
+  const today = new Date().toDateString()
   let newsSummary = "";
   console.log("Fetching news summary for:", today);
 
