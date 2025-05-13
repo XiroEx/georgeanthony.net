@@ -34,13 +34,25 @@ export const scheduledFunction = onSchedule(
     timeZone: "EST", // Adjust the time zone if needed
   },
   async () => {
-    const apiKey = process.env.OPENAI_API_KEY; // Ensure this environment variable is set
-    if (!apiKey) {
-      logger.error("API key is not set. Please set the OPENAI_API_KEY environment variable.");
+    const googleApiKey = process.env.GOOGLE_API_KEY; // Ensure this environment variable is set
+    if (!googleApiKey) {
+      logger.error("Google API key is not set. Please set the GOOGLE_API_KEY environment variable.");
+      return;
+    }
+    const cx = process.env.CX; // Ensure this environment variable is set
+    if (!cx) {
+      logger.error("Custom Search Engine ID (CX) is not set. Please set the CX environment variable.");
+      return;
+    }
+    const openAiApiKey = process.env.OPENAI_API_KEY; // Ensure this environment variable is set
+    if (!openAiApiKey) {
+      logger.error("OpenAI API key is not set. Please set the OPENAI_API_KEY environment variable.");
       return;
     }
     try {
-      const headlines = await getTopFinancialNews(apiKey);
+      const headlines = await getTopFinancialNews(
+        googleApiKey, cx, openAiApiKey
+      );
       if (!headlines) {
         logger.error("No headlines received from the API.");
         return;

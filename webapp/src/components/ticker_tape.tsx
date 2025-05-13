@@ -66,7 +66,7 @@ export default function TickerTape({ text }: { text: string }) {
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
                 width: '100%',
-                height: '42px',
+                height: '40px',
                 position: 'relative',
                 backgroundColor: '#7200a2',
                 color: '#fff',
@@ -82,6 +82,7 @@ export default function TickerTape({ text }: { text: string }) {
                     position: 'absolute',
                     visibility: isVisible ? 'visible' : 'hidden', // Toggle visibility
                     fontVariant: 'small-caps',
+                    fontSize: '.75rem',
                 }}
             >
                 {formattedDate.toUpperCase()}{' - '}{text.startsWith('"') && text.endsWith('"') ? text.slice(1, -1) : text}
