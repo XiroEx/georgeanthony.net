@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogOverlay, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { Suspense, useState } from "react";
 
 export default function Quote() {
   const [success, setSuccess] = useState(false);
@@ -14,6 +15,7 @@ export default function Quote() {
     email: "",
     phone: "",
   });
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -100,9 +102,10 @@ export default function Quote() {
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-md"
       >
-        <h1 className="text-2xl font-bold text-center mb-6 text-[#7200a2]">
-          Get a Quote
-        </h1>
+        <Suspense>
+          <QuoteHero />
+        </Suspense>
+        
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
             Name <span className="text-red-500">*</span>
@@ -190,4 +193,24 @@ export default function Quote() {
       </Dialog>
     </div>
   );
+}
+
+function QuoteHero() {
+  
+  const query = useSearchParams();
+
+  const quoteTitle = query.has('life') ? `Life Insurance Quote` :
+    query.has('accident') ? `Accident Insurance Quote` : "Get A Quote";
+
+  const quoteSlogan = (query.has('accident') && query.has('life') ) ?  `Life is unpredictable. Your family's future doesn't have to be. Ease your mind.` :
+  query.has('life') ? `When you're no longer there, your love still can be. Ease the burden.` : query.has('accident') ? `Life can be unpredictable. Ease your mind.` : "Get A Quote";
+
+  return (<>
+    <h1 className="text-2xl font-bold text-center mb-6 text-[#7200a2]">
+      {quoteTitle}
+    </h1>
+    <h2 className="text-md mb-4 text-[#7200a2] text-center">
+      {quoteSlogan}
+    </h2>
+  </>)
 }

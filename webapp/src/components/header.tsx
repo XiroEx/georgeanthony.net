@@ -10,13 +10,15 @@ export default function Header() {
     const path = usePathname();
     const query = useSearchParams();
     const queryString = query ? '?' + query.toString() : '';
+    const queryLinkTitle = query.has('life') ? `Get A Quote` : 
+        query.has('accident') ? `Get A Quote` : "Get A Quote";
 
 
     return <header className="bg-white shadow p-6 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-[#7200a2]"><Link href={`/${queryString}`}>George Anthony</Link></h1>
         <nav className="space-x-6 flex items-center">
         
-            {!path.includes('quote') && query.has('life') && <Link href={`/quote${queryString}`} className="hover:text-[#7200a2]">Get a Quote</Link>}
+            {!path.includes('quote') && query.has('life') && <Link href={`/quote${queryString}`} className="hover:text-[#7200a2]">{queryLinkTitle}</Link>}
             <div className="hidden md:block space-x-4">
                 <Link href={`/about${queryString}`} className="hover:text-[#7200a2]">About</Link>
                 <Link href={`/${queryString}#contact`} className="hover:text-[#7200a2]">Contact</Link>
