@@ -1,8 +1,7 @@
+import Contact from "@/components/contact";
 import Hero from "@/components/hero";
 import Services from "@/components/service_section";
 import TickerTape from "@/components/ticker_tape";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Suspense } from "react";
 //import { Mail, Phone, DollarSign } from "lucide-react";
 
@@ -45,13 +44,7 @@ export default async function FinancialServicesSite() {
         </section>
 
         <section id="contact" className="mb-16 text-center">
-          <h3 className="text-2xl font-semibold mb-4">Contact Us</h3>
-          <form className="grid grid-cols-1 gap-4 max-w-md mx-auto">
-            <Input placeholder="Your Name" />
-            <Input type="email" placeholder="Your Email" />
-            <Input placeholder="What are you looking for?" />
-            <Button type="submit" className="bg-[#7200a2] hover:bg-purple-800 text-white">Send Message</Button>
-          </form>
+          <Contact />
         </section>
       </main>
 

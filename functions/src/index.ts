@@ -122,7 +122,7 @@ export const quote = onRequest(async (req, res) => {
       }
       const age = new Date().getFullYear() - new Date(dob).getFullYear();
       const dobDate = new Date(dob).toLocaleDateString("en-US", {timeZone: "UTC"});
-      const message = `Quote request from ${name} \nAge: ${age} (${dobDate})\nEmail: ${email}\nPhone: ${phone}`;
+      const message = `Quote request from ${name} \nAge: ${age} (${dobDate})\nEmail: ${email}\nPhone: ${phone}\nMessage: ${req.body.message}`;
       await user.send(message);
       res.status(200).send("Quote request sent successfully!");
     } else {
@@ -142,17 +142,18 @@ export const quote = onRequest(async (req, res) => {
  * @param {string} formData.phone - The phone number of the user (optional, but must be valid if provided).
  * @return {boolean} A boolean indicating whether the form data is valid.
  */
-function checkData(formData: {
-  name: string; dob: string; email: string; phone: string
-}): boolean {
-  const {name, dob, email, phone} = formData;
-  return (
-    name.trim() !== "" &&
-    dob.trim() !== "" &&
-    (email.trim() !== "" || phone.trim() !== "") &&
-    (email.trim() === "" || checkEmail(email)) &&
-    (phone.trim() === "" || checkPhone(phone))
-  );
+function checkData(formData: any): boolean {
+  const {name, dob, email, phone, message} = formData;
+  // At least one of name, dob, email, or phone must be provided and valid if present
+  const hasAny =
+    (name && name.trim() !== "") ||
+    (dob && dob.trim() !== "") ||
+    (email && email.trim() !== "") ||
+    (phone && phone.trim() !== "") ||
+    (message && message.trim() !== "");
+  const emailValid = !email || email.trim() === "" || checkEmail(email);
+  const phoneValid = !phone || phone.trim() === "" || checkPhone(phone);
+  return hasAny && emailValid && phoneValid;
 }
 
 /**

@@ -1,14 +1,17 @@
 'use client'
 
+import { Loading } from "@/components/loading";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogOverlay, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { checkData, checkDOB, checkEmail, checkPhone } from "@/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { Suspense, useState } from "react";
 
 export default function Quote() {
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -26,7 +29,7 @@ export default function Quote() {
   const handleSubmit = async (e: React.FormEvent) => {
     const { name, dob, email, phone } = formData;
     e.preventDefault();
-    if (!checkData()) {
+    if (!checkData(formData)) {
       if (email.trim() === "" && phone.trim() === "") {
         alert("Please provide at least one contact method (email or phone).");
         return;
@@ -44,12 +47,14 @@ export default function Quote() {
     }
 
     try {
+      setLoading(true);
       const res = await fetch(`https://quote-ldgqw3kyla-uc.a.run.app`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, dob, email, phone }),
+
       });
       
       if (!res.ok) {
@@ -62,39 +67,6 @@ export default function Quote() {
     }
 
   };
-
-  function checkData() {
-    const { name, dob, email, phone } = formData;
-    return (
-      name.trim() !== "" &&
-      dob.trim() !== "" &&
-      (email.trim() !== "" || phone.trim() !== "") &&
-      (email.trim() === "" || checkEmail(email)) &&
-      (phone.trim() === "" || checkPhone(phone))
-    );
-  }
-
-  function checkEmail(email: string) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  }
-  function checkPhone(phone: string) {
-    const re = /^\d{10}$/;
-    return re.test(phone);
-  }
-  function checkDOB(dob: string) {
-    const re = /^\d{4}-\d{2}-\d{2}$/; // Matches YYYY-MM-DD format
-    if (!re.test(dob)) {
-      return false;
-    }
-    const [year, month, day] = dob.split("-").map(Number);
-    const date = new Date(year, month - 1, day);
-    return (
-      date.getFullYear() === year &&
-      date.getMonth() === month - 1 &&
-      date.getDate() === day
-    );
-  }
 
   return (
     <div className=" bg-gray-50 text-gray-900 font-sans flex py-12 justify-center">
@@ -176,19 +148,29 @@ export default function Quote() {
           Submit
         </Button>
       </form>
-      <Dialog open={success} onOpenChange={setSuccess}>
+      <Dialog open={loading} onOpenChange={setLoading}>
         <DialogOverlay className="fixed inset-0 bg-black opacity-30" />
         <DialogContent className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-lg">
-          <DialogTitle className="text-lg font-bold">Success!</DialogTitle>
-          <DialogDescription className="mt-2">
-            Your quote request has been sent successfully!
-          </DialogDescription>
-          <Button
-            onClick={() => setSuccess(false)}
-            className="mt-4 bg-[#7200a2] hover:bg-purple-800 text-white"
-          >
-            <Link href='/?life'>Close</Link>
-          </Button>
+          { success ? <>
+            <DialogTitle className="text-lg font-bold">Success!</DialogTitle>
+            <DialogDescription className="mt-2">
+              Your quote request has been sent successfully!
+            </DialogDescription>
+            <Button 
+              onClick={() => {
+                setLoading(false);
+                setSuccess(false);
+              }}
+              className="mt-4 bg-[#7200a2] hover:bg-purple-800 text-white"
+            >
+              <Link href='/?life'>Close</Link>
+            </Button>
+          </>:<>
+            <DialogTitle className="text-lg font-bold">Loading...</DialogTitle>
+            <DialogDescription className="mt-2 mx-auto p-12">
+              <Loading />
+            </DialogDescription>
+          </>}
         </DialogContent>
       </Dialog>
     </div>
