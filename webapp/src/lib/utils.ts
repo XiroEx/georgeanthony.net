@@ -6,7 +6,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
- export function checkData(formData : any) {
+export type FormData = {
+  name: string;
+  dob: string;
+  email: string;
+  phone: string;
+};
+
+export function checkData(formData: FormData) {
   const { name, dob, email, phone } = formData;
   return (
     name.trim() !== "" &&
