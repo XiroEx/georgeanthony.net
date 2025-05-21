@@ -137,12 +137,12 @@ export const quote = onRequest(async (req, res) => {
  */
 export const contact = onRequest(async (req, res) => {
   corsHandler(req, res, async () => {
-    const {send, message, source} = req.body;
+    const {send, message, source, cc} = req.body;
     if (send && checkEmail(send)) {
       // If "send" property is present and valid, send an email
       const subject = (source ? source + " " : "") + "Inquiry";
       try {
-        await sendEmailMessage(send, subject, message || "");
+        await sendEmailMessage(send, subject, message || "", cc);
         res.status(200).send("Email sent successfully!");
       } catch (error) {
         logger.error("Failed to send email:", error);
@@ -151,7 +151,7 @@ export const contact = onRequest(async (req, res) => {
       return;
     }
     // Otherwise, send a Discord message as before
-    const apiKey = process.env.DISCORD_API_KEY; // Ensure this environment variable is set
+    const apiKey = process.env.DISCORD_API_KEY;
     if (!apiKey) {
       res.status(500).send("API key is not set. Please set the environment variable.");
       return;
@@ -168,8 +168,8 @@ export const contact = onRequest(async (req, res) => {
       await sendDiscordMessage(apiKey, userId, discordMessage);
       res.status(200).send("Contact request sent successfully!");
     } catch (error) {
-      logger.error("Failed to send Discord message:", error); // Log detailed error
-      res.status(500).send("Failed to send Discord message."); // Generic message to client
+      logger.error("Failed to send Discord message:", error);
+      res.status(500).send("Failed to send Discord message.");
     }
   });
 });
@@ -244,7 +244,7 @@ async function sendDiscordMessage(
   await client.login(apiKey);
   const user = await client.users.fetch(userId);
   if (!user) {
-    await client.destroy();
+    client.destroy();
     throw new Error("User not found.");
   }
   await user.send(message);
@@ -257,13 +257,15 @@ async function sendDiscordMessage(
  * @param {string} to - Recipient email address.
  * @param {string} subject - Email subject.
  * @param {string} text - Email body (plain text).
+ * @param {string} [cc] - Optional CC email address.
  * @throws Will throw an error if sending fails.
  * @return {Promise<void>}
  */
 async function sendEmailMessage(
   to: string,
   subject: string,
-  text: string
+  text: string,
+  cc?: string
 ): Promise<void> {
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -272,12 +274,15 @@ async function sendEmailMessage(
       pass: process.env.EMAIL_PASS,
     },
   });
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
+  const mailOptions: any = {
+    from: process.env.EMAIL_ALIAS || process.env.EMAIL_USER,
     to,
     subject,
     text,
   };
+  if (cc && checkEmail(cc)) {
+    mailOptions.cc = cc;
+  }
   const info = await transporter.sendMail(mailOptions);
   if (info.rejected.length > 0) {
     throw new Error("Email not sent.");
