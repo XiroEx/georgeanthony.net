@@ -6,6 +6,7 @@ import {onRequest} from "firebase-functions/https";
 import {Client} from "discord.js-light";
 import cors from "cors";
 import {initializeApp} from "firebase-admin/app";
+import nodemailer from "nodemailer";
 
 const corsHandler = cors({origin: true});
 initializeApp();
@@ -76,6 +77,7 @@ export const scheduledFunction = onSchedule(
   }
 );
 
+
 /**
  * Handles HTTP requests to process a quote request.
  *
@@ -95,8 +97,6 @@ export const scheduledFunction = onSchedule(
  * @param req - The HTTP request object.
  * @param res - The HTTP response object.
  */
-
-
 export const quote = onRequest(async (req, res) => {
   corsHandler(req, res, async () => {
     const {name, dob, email, phone} = req.body;
@@ -107,30 +107,26 @@ export const quote = onRequest(async (req, res) => {
       return;
     }
     if (checkData(formData)) {
-      // send discord message to user (key=DISCORD_API_KEY, user=DISCORD_USER_ID)
-      const client = new Client({intents: []});
-      await client.login(apiKey);
       const userId = process.env.DISCORD_USER_ID;
       if (!userId) {
         res.status(500).send("User ID is not set. Please set the DISCORD_USER_ID environment variable.");
         return;
       }
-      const user = await client.users.fetch(userId);
-      if (!user) {
-        res.status(500).send("User not found.");
-        return;
-      }
       const age = new Date().getFullYear() - new Date(dob).getFullYear();
       const dobDate = new Date(dob).toLocaleDateString("en-US", {timeZone: "UTC"});
       const message = `Quote request from ${name} \nAge: ${age} (${dobDate})\nEmail: ${email}\nPhone: ${phone}\nMessage: ${req.body.message}`;
-      await user.send(message);
-      res.status(200).send("Quote request sent successfully!");
+      try {
+        await sendDiscordMessage(apiKey, userId, message);
+        res.status(200).send("Quote request sent successfully!");
+      } catch (error) {
+        logger.error("Failed to send Discord message:", error); // Log detailed error
+        res.status(500).send("Failed to send Discord message."); // Generic message to client
+      }
     } else {
       res.status(400).send("Please fill in all required fields and provide a valid email or phone number.");
     }
   });
 });
-
 
 /**
  * General contact form handler. No data validation is performed.
@@ -141,28 +137,40 @@ export const quote = onRequest(async (req, res) => {
  */
 export const contact = onRequest(async (req, res) => {
   corsHandler(req, res, async () => {
+    const {send, message, source} = req.body;
+    if (send && checkEmail(send)) {
+      // If "send" property is present and valid, send an email
+      const subject = (source ? source + " " : "") + "Inquiry";
+      try {
+        await sendEmailMessage(send, subject, message || "");
+        res.status(200).send("Email sent successfully!");
+      } catch (error) {
+        logger.error("Failed to send email:", error);
+        res.status(500).send("Failed to send email.");
+      }
+      return;
+    }
+    // Otherwise, send a Discord message as before
     const apiKey = process.env.DISCORD_API_KEY; // Ensure this environment variable is set
     if (!apiKey) {
       res.status(500).send("API key is not set. Please set the environment variable.");
       return;
     }
-    const client = new Client({intents: []});
-    await client.login(apiKey);
     const userId = process.env.DISCORD_USER_ID;
     if (!userId) {
       res.status(500).send("User ID is not set. Please set the DISCORD_USER_ID environment variable.");
       return;
     }
-    const user = await client.users.fetch(userId);
-    if (!user) {
-      res.status(500).send("User not found.");
-      return;
-    }
-    const message = Object.entries(req.body)
+    const discordMessage = Object.entries(req.body)
       .map(([key, value]) => `${key}: ${value}`)
       .join("\n");
-    await user.send(message);
-    res.status(200).send("Contact request sent successfully!");
+    try {
+      await sendDiscordMessage(apiKey, userId, discordMessage);
+      res.status(200).send("Contact request sent successfully!");
+    } catch (error) {
+      logger.error("Failed to send Discord message:", error); // Log detailed error
+      res.status(500).send("Failed to send Discord message."); // Generic message to client
+    }
   });
 });
 
@@ -216,3 +224,65 @@ function checkPhone(phone: string): boolean {
   const re = /^\d{10}$/; // Adjust the regex as per your phone number format
   return re.test(phone);
 }
+
+
+/**
+ * Sends a message to a Discord user using the provided API key and user ID.
+ *
+ * @param {string} apiKey - Discord bot API key.
+ * @param {string} userId - Discord user ID to send the message to.
+ * @param {string} message - The message content to send.
+ * @throws Will throw an error if sending fails.
+ * @return {Promise<void>}
+ */
+async function sendDiscordMessage(
+  apiKey: string,
+  userId: string,
+  message: string
+): Promise<void> {
+  const client = new Client({intents: []});
+  await client.login(apiKey);
+  const user = await client.users.fetch(userId);
+  if (!user) {
+    await client.destroy();
+    throw new Error("User not found.");
+  }
+  await user.send(message);
+  client.destroy();
+}
+
+/**
+ * Sends an email using SMTP credentials from environment variables.
+ *
+ * @param {string} to - Recipient email address.
+ * @param {string} subject - Email subject.
+ * @param {string} text - Email body (plain text).
+ * @throws Will throw an error if sending fails.
+ * @return {Promise<void>}
+ */
+async function sendEmailMessage(
+  to: string,
+  subject: string,
+  text: string
+): Promise<void> {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to,
+    subject,
+    text,
+  };
+  const info = await transporter.sendMail(mailOptions);
+  if (info.rejected.length > 0) {
+    throw new Error("Email not sent.");
+  }
+  logger.info("Email sent:", info.response);
+  transporter.close();
+}
+
