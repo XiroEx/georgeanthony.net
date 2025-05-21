@@ -137,10 +137,12 @@ export const quote = onRequest(async (req, res) => {
  */
 export const contact = onRequest(async (req, res) => {
   corsHandler(req, res, async () => {
-    const {send, message, source, cc} = req.body;
+    const {send, message, source, cc, email} = req.body;
     if (send && checkEmail(send)) {
       // If "send" property is present and valid, send an email
-      const subject = (source ? source + " " : "") + "Inquiry";
+      const subject =
+        (source ? `${source} inquiry` : "Inquiry") +
+        (email ? ` from ${email}` : "");
       try {
         await sendEmailMessage(send, subject, message || "", cc);
         res.status(200).send("Email sent successfully!");
