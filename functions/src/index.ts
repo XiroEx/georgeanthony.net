@@ -131,6 +131,42 @@ export const quote = onRequest(async (req, res) => {
   });
 });
 
+
+/**
+ * General contact form handler. No data validation is performed.
+ * A Discord message is sent.
+ * For each property in the request body, add a line to the message of "[key]: [value]".
+ * @param req - The HTTP request object.
+ * @param res - The HTTP response object.
+ */
+export const contact = onRequest(async (req, res) => {
+  corsHandler(req, res, async () => {
+    const apiKey = process.env.DISCORD_API_KEY; // Ensure this environment variable is set
+    if (!apiKey) {
+      res.status(500).send("API key is not set. Please set the environment variable.");
+      return;
+    }
+    const client = new Client({intents: []});
+    await client.login(apiKey);
+    const userId = process.env.DISCORD_USER_ID;
+    if (!userId) {
+      res.status(500).send("User ID is not set. Please set the DISCORD_USER_ID environment variable.");
+      return;
+    }
+    const user = await client.users.fetch(userId);
+    if (!user) {
+      res.status(500).send("User not found.");
+      return;
+    }
+    const message = Object.entries(req.body)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join("\n");
+    await user.send(message);
+    res.status(200).send("Contact request sent successfully!");
+  });
+});
+
+
 /**
  * Validates the provided form data to ensure required fields are not empty
  * and that email and phone fields meet their respective validation criteria.
