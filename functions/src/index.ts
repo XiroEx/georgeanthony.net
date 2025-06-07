@@ -29,9 +29,9 @@ initializeApp();
  * @throws Will log an error if the `OPENAI_API_KEY` environment variable is not set.
  * @throws Will log an error if there is an issue fetching news or storing it in Firestore.
  */
-export const scheduledFunction = onSchedule(
+export const getNewsSummary = onSchedule(
   {
-    schedule: "0 0,2,4,6-22 * * *", // Cron schedule: 12am, 2am, 4am, and every hour from 6am to 10pm
+    schedule: "0 */4 * * *", // Every 4 hours
     timeZone: "EST", // Adjust the time zone if needed
   },
   async () => {
