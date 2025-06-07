@@ -74,18 +74,20 @@ export default function TickerTape({ text }: { text: string }) {
                 alignItems: 'center',
             }}
         >
-            <div
-                ref={tickerRef}
-                style={{
-                    display: 'inline-block',
-                    whiteSpace: 'nowrap',
-                    position: 'absolute',
-                    visibility: isVisible ? 'visible' : 'hidden', // Toggle visibility
-                    fontVariant: 'small-caps',
-                    fontSize: '.75rem',
-                }}
-            >
-                {formattedDate.toUpperCase()}{' - '}{text.startsWith('"') && text.endsWith('"') ? text.slice(1, -1) : text}
+            <div className='overflow-hidden whitespace-nowrap flex items-center max-w-5xl w-full mx-auto'> 
+                <div
+                    ref={tickerRef}
+                    style={{
+                        display: 'inline-block',
+                        whiteSpace: 'nowrap',
+                        position: 'absolute',
+                        visibility: isVisible ? 'visible' : 'hidden', // Toggle visibility
+                        fontVariant: 'small-caps',
+                        fontSize: '.75rem',
+                    }}
+                >
+                    {formattedDate.toUpperCase()}{' - '}{text.startsWith('"') && text.endsWith('"') ? text.slice(1, -1) : text}
+                </div>
             </div>
         </div>
     );
