@@ -35,8 +35,11 @@ export default function RootLayout({
       >
         <Suspense><Header /></Suspense>
         {children}
-        <footer className="bg-white border-t p-6 text-center text-sm text-gray-500">
+        <footer className="bg-white border-t p-6 pb-8 text-center text-sm text-gray-500">
           <p>&copy; 2025 George Anthony. All rights reserved.</p>
+          <p className="mt-2">
+            built by <a href="https://redbtn.io" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-gray-700">redbtn</a>
+          </p>
         </footer>
       </body>
     </html>
