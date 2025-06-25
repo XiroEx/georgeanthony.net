@@ -4,10 +4,13 @@ import * as logger from "firebase-functions/logger";
 import {checkEmail} from "./validation";
 
 /**
- * Maps email aliases to their corresponding password environment variable names.
+ * Maps email aliases to their corresponding user and password environment variable names.
  */
-export const EMAIL_ALIAS_MAP: Record<string, string> = {
-  "info@prosolutionlogistics.com": "PRO_SOLUTIONS_PASS",
+export const EMAIL_ALIAS_MAP: Record<string, {user: string; pass: string}> = {
+  "info@prosolutionlogistics.com": {
+    user: "PRO_SOLUTIONS_USER",
+    pass: "PRO_SOLUTIONS_PASS",
+  },
   // Add more aliases as needed
 };
 
@@ -60,16 +63,17 @@ export async function sendEmailMessage(
   let fromAddress = process.env.EMAIL_ALIAS || process.env.EMAIL_USER;
 
   if (alias && EMAIL_ALIAS_MAP[alias]) {
-    const passwordEnvVar = EMAIL_ALIAS_MAP[alias];
+    const {user: userEnvVar, pass: passwordEnvVar} = EMAIL_ALIAS_MAP[alias];
+    const aliasUser = process.env[userEnvVar];
     const aliasPassword = process.env[passwordEnvVar];
 
-    if (aliasPassword) {
-      emailUser = alias;
+    if (aliasUser && aliasPassword) {
+      emailUser = aliasUser;
       emailPass = aliasPassword;
       fromAddress = alias;
       logger.info(`Using alias credentials for: ${alias}`);
     } else {
-      logger.warn(`Password not found for alias ${alias}, using default credentials`);
+      logger.warn(`Credentials not found for alias ${alias}, using default credentials`);
     }
   }
 
